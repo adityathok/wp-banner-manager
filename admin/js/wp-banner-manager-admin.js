@@ -46,20 +46,20 @@
 					var id 		= attachment.id;
 					var url 	= attachment.attributes.sizes.full?attachment.attributes.sizes.full.url:attachment.attributes.url;
 		
-					jQuery(".wpbannerman-main").append(`<div class="wpbannerman-image wpbannerman-image-${id}" data-node="${nodeid}" data-id="${id}"></div>`);
+					jQuery(".wpbannerman-box-image").append(`<div class="wpbannerman-image wpbannerman-image-${id}" data-node="${nodeid}" data-id="${id}"></div>`);
 					jQuery(`.wpbannerman-image-${id}`).append(`<img src="${url}" alt="">`);
-					jQuery(`.wpbannerman-main`).find('.wpbannerman-media-id').val(id);
-					jQuery(`.wpbannerman-main`).find('.wpbannerman-media-url').val(url);
+					jQuery(`.wpbannerman-main-image`).find('.wpbannerman-media-id').val(id);
+					jQuery(`.wpbannerman-main-image`).find('.wpbannerman-media-url').val(url);
 					jQuery(".wpbannerman-main-upload").addClass('has-image');
 				});
 				// galleryFrame.close();
 			});
 
 			// Remove
-			jQuery('.wpbannerman-main-upload').on('click', '.wpbannerman-delete-btn', function() {
+			jQuery(document).on('click', '.wpbannerman-delete-btn', function() {
 				jQuery(".wpbannerman-image").remove();
-				jQuery(`.wpbannerman-main`).find('.wpbannerman-media-id').val('');
-				jQuery(`.wpbannerman-main`).find('.wpbannerman-media-url').val('');
+				jQuery(".wpbannerman-media-id").val('');
+				jQuery('.wpbannerman-media-url').val('');
 				jQuery(".wpbannerman-main-upload").removeClass('has-image');
 			});
 

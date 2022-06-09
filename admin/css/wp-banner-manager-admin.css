@@ -1,0 +1,24 @@
+.wpbannerman-main-upload.has-image .wpbannerman-button-upload {
+    display: none;
+}
+.wpbannerman-main-upload:not(.has-image) .wpbannerman-main-image {
+    display: none;
+}
+.wpbannerman-main-image {
+    text-align: center;
+    border: 0.15rem dashed #addbc3;
+    padding: 2rem;
+}
+.wpbannerman-upload-btn {
+    display: block;
+    margin: 2rem 0;
+    text-align: center;
+    padding: 2rem;
+    border: 0.25rem dashed #9ec5df;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+.wpbannerman-image img {
+    margin: 0 auto;
+}
