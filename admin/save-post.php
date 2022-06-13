@@ -33,7 +33,11 @@ if ( ! function_exists( 'wpbannerman_save_post_class_meta' ) ) {
 
         /* save meta wpbannerman-media. */
         $media_value = ( isset( $_POST['wpbannerman-media'] ) ? $_POST['wpbannerman-media'] : '' );
-        update_post_meta( $post_id, 'wpbannerman-media', $media_value );        
+        update_post_meta( $post_id, 'wpbannerman-media', $media_value ); 
+         
+        /* save meta wpbannerman-link. */
+        $link_value = ( isset( $_POST['wpbannerman-link'] ) ? $_POST['wpbannerman-link'] : '' );
+        update_post_meta( $post_id, 'wpbannerman-link', $link_value );      
 
     } 
 

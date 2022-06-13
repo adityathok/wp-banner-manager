@@ -19,6 +19,21 @@
     font-weight: bold;
     cursor: pointer;
 }
+.wpbannerman-image {
+    display: inline-block;
+    position: relative;
+}
 .wpbannerman-image img {
     margin: 0 auto;
+    max-width: 100%;
+}
+.wpbannerman-delete-btn {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+}
+.wpbannerman-delete-btn .dashicons {
+    color: #f30808;
+    font-size: 1.5rem;
+    cursor: pointer;
 }
