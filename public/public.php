@@ -9,6 +9,9 @@
  * @subpackage wp_banner_manager/public
  */
 
+// register shortcode
+require plugin_dir_path( __FILE__ ) . 'shortcode.php';
+
 if ( ! function_exists( 'wp_banner_manager_public_enqueue' ) ) {
     /**
      *
