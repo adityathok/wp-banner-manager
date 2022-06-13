@@ -41,3 +41,4 @@ define( 'WP_BANNER_MANAGER_VERSION', '1.0.0' );
  * call another file for the plugin
  */
 require plugin_dir_path( __FILE__ ) . 'admin/admin.php';
+require plugin_dir_path( __FILE__ ) . 'public/public.php';
