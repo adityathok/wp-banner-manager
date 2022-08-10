@@ -48,7 +48,7 @@
 		
 					jQuery(".wpbannerman-box-image").append(`<div class="wpbannerman-image wpbannerman-image-${id}" data-node="${nodeid}" data-id="${id}"></div>`);
 					jQuery(`.wpbannerman-image-${id}`).append(`<img src="${url}" alt="">`);
-					jQuery(`.wpbannerman-image-${id}`).append(`<input class="wpbannerman-media-id" name="wpbannerman-media[]" value="${id}" type="hidden">`);
+					jQuery(`.wpbannerman-image-${id}`).append(`<input class="wpbannerman-media-id" name="wpbannerman[media]" value="${id}" type="hidden">`);
 					jQuery(`.wpbannerman-image-${id}`).append(`<div class="wpbannerman-delete-btn"> <span class="dashicons dashicons-dismiss"></span> </div>`);
 					jQuery(".wpbannerman-main-upload").addClass('has-image');
 				});

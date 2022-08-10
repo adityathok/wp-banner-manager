@@ -33,17 +33,13 @@ if ( ! function_exists( 'wp_banner_manager_admin_enqueue' ) ) {
      */
     function wp_banner_manager_admin_enqueue($hook) {
 
-        if ( 'post.php' != $hook ) {
-            return;
-        }
-
         global $post;
         if ( isset($post->post_type) && 'wpbannerman' != $post->post_type ) {
             return;
         }
 
-        wp_enqueue_script('wp-banner-manager-admin-script', plugin_dir_url(__FILE__) . 'js/wp-banner-manager-admin.js');
-        wp_enqueue_style( 'wp-banner-manager-admin-style', plugin_dir_url(__FILE__) . 'css/wp-banner-manager-admin.css');
+        wp_enqueue_script('wp-banner-manager-admin-script', plugin_dir_url(__FILE__) . 'js/admin.js');
+        wp_enqueue_style( 'wp-banner-manager-admin-style', plugin_dir_url(__FILE__) . 'css/admin.css');
         wp_enqueue_script('media-upload');
         wp_enqueue_script('thickbox');
         wp_enqueue_style('thickbox');

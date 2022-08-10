@@ -24,16 +24,20 @@ if ( ! function_exists( 'wp_banner_manager_wpbannerman_shortcode' ) ) {
         ), $atts );
         $id         = $att['id'];
         $nodeid     = 'wpbannerman'.uniqid();
-        $metamedia  = get_post_meta( $id, 'wpbannerman-media', true );
-        $imageid    = $metamedia&&isset($metamedia[0])?$metamedia[0]:'';
+        $datameta   = get_post_meta( $id, 'wpbannerman', true );
+
+        $imageid    = $datameta&&isset($datameta['media'])?$datameta['media']:'';
         $mediaurl   = $imageid?wp_get_attachment_image_url( $imageid, 'full' ):'';
-        $metalink   = get_post_meta($id, 'wpbannerman-link', true );
+
+        $metalink   = $datameta&&isset($datameta['link'])?$datameta['link']:'';
         $linkurl    = $metalink&&isset($metalink['url'])?$metalink['url']:'';
         $linktarget = $metalink&&isset($metalink['target'])&&$metalink['target']=='blank'?'_blank':'';
+        
+        $infobanner = isset($datameta['info'])?$datameta['info']:'';
         ?>
-        <div class="wpbannerman-object">
+        <div class="wpbannerman-object" data-node="<?php echo $nodeid;?>" data-id="<?php echo $id;?>">
             <?php if($mediaurl): ?>                
-                <div class="wpbannerman-image" data-node="<?php echo $nodeid;?>" data-id="<?php echo $id;?>">
+                <div class="wpbannerman-image">
 
                     <?php if($linkurl ): ?>
                         <a href="<?php echo $linkurl;?>" target="<?php echo $linktarget;?>">
@@ -43,6 +47,15 @@ if ( ! function_exists( 'wp_banner_manager_wpbannerman_shortcode' ) ) {
 
                     <?php if($linkurl ): ?>
                         </a>
+                    <?php endif; ?>
+                    
+                    <?php if($infobanner): ?>
+                        <span class="wpbannerman-info">
+                            <span class="wpbannerman-info-icon">i</span>
+                            <div class="wpbannerman-info-bubble">
+                                <?php echo $infobanner;?>
+                            </div>
+                        </span>
                     <?php endif; ?>
 
                 </div>

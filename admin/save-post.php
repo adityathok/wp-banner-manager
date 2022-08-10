@@ -31,13 +31,9 @@ if ( ! function_exists( 'wpbannerman_save_post_class_meta' ) ) {
         if ( !current_user_can( $post_type->cap->edit_post, $post_id ) )
         return $post_id;
 
-        /* save meta wpbannerman-media. */
-        $media_value = ( isset( $_POST['wpbannerman-media'] ) ? $_POST['wpbannerman-media'] : '' );
-        update_post_meta( $post_id, 'wpbannerman-media', $media_value ); 
-         
-        /* save meta wpbannerman-link. */
-        $link_value = ( isset( $_POST['wpbannerman-link'] ) ? $_POST['wpbannerman-link'] : '' );
-        update_post_meta( $post_id, 'wpbannerman-link', $link_value );      
+        /* save meta wpbannerman. */
+        $media_value = ( isset( $_POST['wpbannerman'] ) ? $_POST['wpbannerman'] : '' );
+        update_post_meta( $post_id, 'wpbannerman', $media_value );     
 
     } 
 

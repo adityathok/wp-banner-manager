@@ -13,13 +13,18 @@ function wpbannerman_display_main_metabox() {
 
     $getId      = isset($_GET['post'])?$_GET['post']:'';
     $nodeid     = uniqid();
-    $metamedia  = get_post_meta( $getId, 'wpbannerman-media', true );
-    $imageid    = $metamedia&&isset($metamedia[0])?$metamedia[0]:'';
+    $datameta   = get_post_meta( $getId, 'wpbannerman', true );
+    print_r($datameta);
+
+    $imageid    = isset($datameta['media'])?$datameta['media']:'';
     $mediaurl   = $imageid?wp_get_attachment_image_url( $imageid, 'full' ):'';
     $hasimage   = $imageid?'has-image':'';
-    $metalink   = get_post_meta( $getId, 'wpbannerman-link', true );
+
+    $metalink   = isset($datameta['link'])?$datameta['link']:'';
     $linkurl    = $metalink&&isset($metalink['url'])?$metalink['url']:'';
     $linktarget = $metalink&&isset($metalink['target'])&&$metalink['target']=='blank'?'checked':'';
+
+    $infobanner = isset($datameta['info'])?$datameta['info']:'';
 
     wp_nonce_field( 'wpbannerman_post_nonce', 'wpbannerman_post_nonce' );
     ?>
@@ -30,7 +35,7 @@ function wpbannerman_display_main_metabox() {
                 <?php if($mediaurl): ?>
                     <div class="wpbannerman-image wpbannerman-image-<?php echo $imageid;?>" data-node="<?php echo $nodeid;?>" data-id="<?php echo $imageid;?>">
                         <img src="<?php echo $mediaurl;?>" alt="">
-                        <input class="wpbannerman-media-id" name="wpbannerman-media[]" value="<?php echo $imageid;?>" type="hidden">
+                        <input class="wpbannerman-media-id" name="wpbannerman[media]" value="<?php echo $imageid;?>" type="hidden">
                         <div class="wpbannerman-delete-btn"> <span class="dashicons dashicons-dismiss"></span> </div>
                     </div>
                 <?php endif; ?>
@@ -49,7 +54,7 @@ function wpbannerman_display_main_metabox() {
                         <tr>
                             <th scope="row"> Link </th>
                             <td>
-                                <input type="text" value="<?php echo $linkurl;?>" id="wpbannerman-link-url" name="wpbannerman-link[url]" class="regular-text">
+                                <input type="text" value="<?php echo $linkurl;?>" id="wpbannerman-link-url" name="wpbannerman[link][url]" class="regular-text">
                                 <br>
                                 <span class="description">Add link when banner is clicked.</span>
                             </td>
@@ -58,9 +63,19 @@ function wpbannerman_display_main_metabox() {
                             <th scope="row"> Link Target </th>
                             <td>
                                 <label>
-                                    <input type="checkbox" value="blank" name="wpbannerman-link[target]" id="wpbannerman-link-target" <?php echo $linktarget;?>>
+                                    <input type="checkbox" value="blank" name="wpbannerman[link][target]" id="wpbannerman-link-target" <?php echo $linktarget;?>>
                                     Blank
                                 </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"> Info Banner </th>
+                            <td>
+                                <fieldset>
+                                    <textarea name="wpbannerman[info]" rows="10" cols="50" id="info_banner" class="large-text"><?php echo $infobanner;?></textarea>
+                                    <br>
+                                    <span class="description">Add info to banner.</span>
+                                </fieldset>
                             </td>
                         </tr>
                     </tbody>

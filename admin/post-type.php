@@ -64,7 +64,7 @@ function wp_banner_manager_add_meta_box() {
         'wpbannerman_display_sideback', 
         'wpbannerman',
         'side',
-        'default',
+        'high',
         ''
     );
 }
