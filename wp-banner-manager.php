@@ -43,3 +43,13 @@ define( 'WP_BANNER_MANAGER_VERSION', '1.0.0' );
 require plugin_dir_path( __FILE__ ) . 'inc/count-banner-views.php';
 require plugin_dir_path( __FILE__ ) . 'admin/admin.php';
 require plugin_dir_path( __FILE__ ) . 'public/public.php';
+
+/**
+ * The code that runs during plugin activation.
+ * This action is documented in inc/classes/class-velocity-toko-activator.php
+ */
+function activate_wp_banner_manager() {
+	require_once plugin_dir_path( __FILE__ ) . 'inc/class-wpbannerman-activator.php';
+	Wpbannerman_Activator::activate();
+}
+register_activation_hook( __FILE__, 'activate_wp_banner_manager' );
