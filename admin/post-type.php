@@ -59,6 +59,15 @@ function wp_banner_manager_add_meta_box() {
         ''
     );
     add_meta_box(
+        'wpbannerman-statistic', 
+        'Statistics Banner', 
+        'wpbannerman_display_statistic', 
+        'wpbannerman',
+        'normal',
+        'high',
+        ''
+    );
+    add_meta_box(
         'wpbannerman-meta-side', 
         'Shortcode Banner', 
         'wpbannerman_display_sideback', 

@@ -19,6 +19,9 @@ require plugin_dir_path( __FILE__ ) . 'metabox-callback-main.php';
 // register metabox callback wpbannerman_display_sideback
 require plugin_dir_path( __FILE__ ) . 'metabox-callback-sideback.php';
 
+// register metabox callback wpbannerman_display_sideback
+require plugin_dir_path( __FILE__ ) . 'metabox-callback-statistic.php';
+
 // register save custom metabox
 require plugin_dir_path( __FILE__ ) . 'save-post.php';
 
