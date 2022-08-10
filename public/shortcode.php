@@ -31,6 +31,7 @@ if ( ! function_exists( 'wp_banner_manager_wpbannerman_shortcode' ) ) {
 
         $metalink       = $datameta&&isset($datameta['link'])?$datameta['link']:'';
         $linkurl        = $metalink&&isset($metalink['url'])?$metalink['url']:'';
+        $linktitle      = $metalink&&isset($metalink['title'])?$metalink['title']:'';
         $linktarget     = $metalink&&isset($metalink['target'])&&$metalink['target']=='blank'?'_blank':'';
         
         $infobanner     = isset($datameta['info'])?$datameta['info']:'';
@@ -41,7 +42,7 @@ if ( ! function_exists( 'wp_banner_manager_wpbannerman_shortcode' ) ) {
                 <div class="wpbannerman-image">
 
                     <?php if($linkurl ): ?>
-                        <a href="<?php echo $linkurl;?>" target="<?php echo $linktarget;?>">
+                        <a href="<?php echo $linkurl;?>" target="<?php echo $linktarget;?>" title="<?php echo $linktitle;?>">
                     <?php endif; ?>
 
                     <img src="<?php echo $mediaurl;?>" alt="">
@@ -60,7 +61,7 @@ if ( ! function_exists( 'wp_banner_manager_wpbannerman_shortcode' ) ) {
                     <?php endif; ?>
 
                     <?php if($closebutton=='true'): ?>
-                        <span class="wpbannerman-close-btn" data-node="<?php echo $nodeid;?>">
+                        <span class="wpbannerman-close-btn" data-node="<?php echo $nodeid;?>" title="Close">
                             <span class="wpbannerman-close-icon">x</span>
                         </span>
                     <?php endif; ?>

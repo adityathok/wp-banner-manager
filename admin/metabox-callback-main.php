@@ -22,6 +22,7 @@ function wpbannerman_display_main_metabox() {
 
     $metalink       = isset($datameta['link'])?$datameta['link']:'';
     $linkurl        = $metalink&&isset($metalink['url'])?$metalink['url']:'';
+    $linktitle      = $metalink&&isset($metalink['title'])?$metalink['title']:'';
     $linktarget     = $metalink&&isset($metalink['target'])&&$metalink['target']=='blank'?'checked':'';
 
     $infobanner     = isset($datameta['info'])?$datameta['info']:'';
@@ -68,6 +69,12 @@ function wpbannerman_display_main_metabox() {
                                     <input type="checkbox" value="blank" name="wpbannerman[link][target]" id="wpbannerman-link-target" <?php echo $linktarget;?>>
                                     Blank
                                 </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"> Link Title </th>
+                            <td>
+                                <input type="text" value="<?php echo $linktitle;?>" id="wpbannerman-link-title" name="wpbannerman[link][title]" class="regular-text">
                             </td>
                         </tr>
                         <tr>
