@@ -74,6 +74,10 @@ if ( ! function_exists( 'wp_banner_manager_wpbannerman_shortcode' ) ) {
             <?php endif; ?>
         </div>
         <?php
+
+        //counter view
+        count_wpbannerman_views($id);
+
         return ob_get_clean();
 	}
     add_shortcode( 'wpbannerman', 'wp_banner_manager_wpbannerman_shortcode' );

@@ -77,7 +77,8 @@ add_action( 'add_meta_boxes', 'wp_banner_manager_add_meta_box' );
  */
 add_filter( 'manage_wpbannerman_posts_columns', 'set_custom_edit_wpbannerman_columns' );
 function set_custom_edit_wpbannerman_columns($columns) {
-    $columns['shortcode']     = __( 'Shortcode', 'wpbannerman' );
+    $columns['shortcode']   = __( 'Shortcode', 'wpbannerman' );
+    $columns['hit']         = __( 'Hit', 'wpbannerman' );
     return $columns;
 }
 add_action( 'manage_wpbannerman_posts_custom_column' , 'custom_wpbannerman_column', 25, 2 );
@@ -85,6 +86,9 @@ function custom_wpbannerman_column( $column, $post_id ) {
     switch ( $column ) {
         case 'shortcode' :
             echo '[wpbannerman id="'.$post_id.'"]';
+            break;
+        case 'hit' :
+            echo wpbannerman_get_hit();
             break;
     }
 }

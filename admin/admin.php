@@ -50,5 +50,6 @@ if ( ! function_exists( 'wp_banner_manager_admin_enqueue' ) ) {
             ));
         }
     }
-}// endif function_exists( 'wp_banner_manager_admin_enqueue' ).
+}
+// endif function_exists( 'wp_banner_manager_admin_enqueue' ).
 add_action('admin_enqueue_scripts', 'wp_banner_manager_admin_enqueue');
