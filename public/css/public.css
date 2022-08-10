@@ -10,9 +10,12 @@
     left: 0;
     z-index: 1;
 }
+.wpbannerman-object:not(:hover) .wpbannerman-info {
+    display: none;
+}
 .wpbannerman-info-icon {
     display: inline-block;
-    background-color: rgb(255 255 255 / 20%);
+    background-color:rgb(235,200,49,0.18);
     color: #fff;
     width: 0.95rem;
     height: 0.95rem;
@@ -24,9 +27,9 @@
 }
 .wpbannerman-info-bubble {
     position: absolute;
-    background-color: #ffffff;
+    background-color: #fdfbf8;
     padding: 0.5rem;
-    border: 1px dashed #726914;
+    border: 1px dashed #e39f19;
     border-radius: 0.25rem;
     min-width: 20rem;
     top: 100%;
@@ -35,4 +38,25 @@
 }
 .wpbannerman-info:hover .wpbannerman-info-bubble {
     display: block;
+}
+.wpbannerman-close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+.wpbannerman-object:not(:hover) .wpbannerman-close-btn {
+    display: none;
+}
+.wpbannerman-close-btn {
+    display: inline-block;
+    background-color:rgb(235,49,49,0.18);
+    color: #fff;
+    width: 0.95rem;
+    height: 0.95rem;
+    font-size: .75rem;
+    line-height: 1rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.15rem;
 }

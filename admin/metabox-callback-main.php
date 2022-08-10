@@ -11,20 +11,22 @@
 
 function wpbannerman_display_main_metabox() {
 
-    $getId      = isset($_GET['post'])?$_GET['post']:'';
-    $nodeid     = uniqid();
-    $datameta   = get_post_meta( $getId, 'wpbannerman', true );
-    print_r($datameta);
+    $getId          = isset($_GET['post'])?$_GET['post']:'';
+    $nodeid         = uniqid();
+    $datameta       = get_post_meta( $getId, 'wpbannerman', true );
+    //print_r($datameta);
 
-    $imageid    = isset($datameta['media'])?$datameta['media']:'';
-    $mediaurl   = $imageid?wp_get_attachment_image_url( $imageid, 'full' ):'';
-    $hasimage   = $imageid?'has-image':'';
+    $imageid        = isset($datameta['media'])?$datameta['media']:'';
+    $mediaurl       = $imageid?wp_get_attachment_image_url( $imageid, 'full' ):'';
+    $hasimage       = $imageid?'has-image':'';
 
-    $metalink   = isset($datameta['link'])?$datameta['link']:'';
-    $linkurl    = $metalink&&isset($metalink['url'])?$metalink['url']:'';
-    $linktarget = $metalink&&isset($metalink['target'])&&$metalink['target']=='blank'?'checked':'';
+    $metalink       = isset($datameta['link'])?$datameta['link']:'';
+    $linkurl        = $metalink&&isset($metalink['url'])?$metalink['url']:'';
+    $linktarget     = $metalink&&isset($metalink['target'])&&$metalink['target']=='blank'?'checked':'';
 
-    $infobanner = isset($datameta['info'])?$datameta['info']:'';
+    $infobanner     = isset($datameta['info'])?$datameta['info']:'';
+    $closebutton    = isset($datameta['closebutton'])?$datameta['closebutton']:'';
+    $closebutton    = $closebutton=='true'?'checked':'';
 
     wp_nonce_field( 'wpbannerman_post_nonce', 'wpbannerman_post_nonce' );
     ?>
@@ -65,6 +67,15 @@ function wpbannerman_display_main_metabox() {
                                 <label>
                                     <input type="checkbox" value="blank" name="wpbannerman[link][target]" id="wpbannerman-link-target" <?php echo $linktarget;?>>
                                     Blank
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"> Close Button </th>
+                            <td>
+                                <label>
+                                    <input type="checkbox" value="true" name="wpbannerman[closebutton]" id="wpbannerman-closebutton" <?php echo $closebutton;?>>
+                                    Active Close Button
                                 </label>
                             </td>
                         </tr>

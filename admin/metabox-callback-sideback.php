@@ -14,7 +14,7 @@
     ?>
     <div class="atbanner-meta-side">
         <p>Copy and paste this shortcode to display the banner.</p>
-        <input type="text" value='[wpbannerman id="<?php echo $getId; ?>"]' readonly="readonly" onfocus="this.select();" />
+        <input type="text" value='[wpbannerman id="<?php echo $getId; ?>"]' readonly="readonly" class="widefat" onfocus="this.select();" />
     </div>
     <?php
  }
