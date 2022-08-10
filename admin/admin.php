@@ -42,6 +42,7 @@ if ( ! function_exists( 'wp_banner_manager_admin_enqueue' ) ) {
         }
 
         wp_enqueue_script('wp-banner-manager-admin-script', plugin_dir_url(__FILE__) . 'js/admin.js');
+        wp_enqueue_script('wp-banner-manager-admin-chartjs', plugin_dir_url(__FILE__) . 'js/chartjs.js');
         wp_enqueue_style( 'wp-banner-manager-admin-style', plugin_dir_url(__FILE__) . 'css/admin.css');
         wp_enqueue_script('media-upload');
         wp_enqueue_script('thickbox');

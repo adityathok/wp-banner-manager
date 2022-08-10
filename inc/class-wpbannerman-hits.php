@@ -35,13 +35,14 @@ class Wpbannerman_hits {
     /// add data hits
     public function add($bannerid=null,$uri=null){
         if( $bannerid ) {
+            $date = date( 'Y-m-d', current_time( 'timestamp', 0 ) );
             //check if avalibe
-            $getdata = $this->wpdb->get_results("SELECT * FROM $this->table_name WHERE banner_id = $bannerid AND uri = '$uri'");
+            $getdata = $this->wpdb->get_results("SELECT * FROM $this->table_name WHERE banner_id = $bannerid AND uri = '$uri' AND date = '$date'");
             If(empty($getdata)) { //if empty. insert new data
                 $this->wpdb->insert($this->table_name, array(
                     'banner_id'     => $bannerid,
                     'uri'           => $uri,
-                    'date'          => date( 'Y-m-d', current_time( 'timestamp', 0 ) ),
+                    'date'          => $date,
                     'hit'           => 1,
                 ) );
             } else {
@@ -53,6 +54,15 @@ class Wpbannerman_hits {
                 ) );
             }
         }
+    }
+
+    
+    public function get($query=null){
+        
+        $query = $query?' WHERE '.$query:'';
+        
+        $getdata = $this->wpdb->get_results("SELECT * FROM $this->table_name $query", ARRAY_A);
+        return $getdata;
     }
 
 
