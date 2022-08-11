@@ -17,13 +17,14 @@ if ( ! function_exists( 'count_wpbannerman_views' ) ) {
         }
 
         //update post meta
-        $count = (int) get_post_meta( $post_id, 'hit', true );
+        $count_key = 'hit';
+        $count = (int) get_post_meta( $post_id, $count_key, true );
         $count++;
         update_post_meta( $post_id, $count_key, $count );
 
         //database update
         global $wp;
-        $url    =  $wp->request;
+        $url    = '/'.$wp->request;
         $hits   = New Wpbannerman_hits;
         $hits->add($post_id,$url);
     }

@@ -22,6 +22,8 @@ class Wpbannerman_hits {
             id INT UNSIGNED NOT NULL AUTO_INCREMENT,
             banner_id bigint(20) NOT NULL,
             uri varchar(255) NOT NULL,
+            type varchar(180) NOT NULL,
+            uri_id bigint(20) NOT NULL,
             date date NOT NULL,
             hit bigint(20) NOT NULL,
             PRIMARY KEY  (id)
@@ -65,5 +67,15 @@ class Wpbannerman_hits {
         return $getdata;
     }
 
+    public function deleteDataById($post_id){
+        
+        $query = $wpdb->prepare( 'SELECT banner_id FROM %s WHERE banner_id = %d', $this->table_name, $post_id );
+        $var = $wpdb->get_var( $query );
+        if ( $var ) {
+            $query2 = $wpdb->prepare( 'DELETE FROM %s WHERE banner_id = %d', $this->table_name, $post_id );
+            $wpdb->query( $query2 );
+        }
+
+    }
 
 }

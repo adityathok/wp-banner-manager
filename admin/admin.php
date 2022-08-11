@@ -57,3 +57,18 @@ if ( ! function_exists( 'wp_banner_manager_admin_enqueue' ) ) {
 }
 // endif function_exists( 'wp_banner_manager_admin_enqueue' ).
 add_action('admin_enqueue_scripts', 'wp_banner_manager_admin_enqueue');
+
+///add action when delete post
+add_action( 'before_delete_post', 'wpbannerman_delete_banner_post' );
+function wpbannerman_delete_banner_post( $postid ) {
+ 
+    global $post_type;   
+ 
+    if ( 'wpbannerman' !== $post_type ) {
+        return;
+    }
+ 
+    // Delete data hits
+    Wpbannerman_hits::deleteDataById($postid);
+
+}

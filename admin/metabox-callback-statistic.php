@@ -10,6 +10,12 @@
  */
 function wpbannerman_display_statistic() {
 
+    $getId  = isset($_GET['post'])?$_GET['post']:'';
+    if(empty($getId)){
+        echo 'Nothing to show';
+        return false;
+    }
+
     //create array date
     $datenow    = date( 'Y-m-d', current_time( 'timestamp', 0 ) );
     $startdate  = date("Y-m-d", strtotime("-1 month", strtotime($datenow)));
@@ -29,7 +35,13 @@ function wpbannerman_display_statistic() {
 
     //get data from table database    
     $hits       = new Wpbannerman_hits;
-    $datatable = $hits->get('');
+    $datatable  = $hits->get("(date BETWEEN '".$datalabel[0]."' AND '".$datenow."') AND (banner_id = ".$getId.")");
+    
+    if(empty($datatable)){
+        echo 'No data to display';
+        return false;
+    }
+
     foreach ($datatable as $key => $value) {
         $datearray[$value['date']] = $datearray[$value['date']]+$value['hit'];      
     }
