@@ -97,7 +97,8 @@ function custom_wpbannerman_column( $column, $post_id ) {
             echo '[wpbannerman id="'.$post_id.'"]';
             break;
         case 'hit' :
-            echo wpbannerman_get_hit();
+            $hits = New Wpbannerman_hits;
+            echo $hits->view($post_id);
             break;
     }
 }

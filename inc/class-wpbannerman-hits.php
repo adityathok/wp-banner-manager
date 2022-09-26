@@ -6,6 +6,7 @@ class Wpbannerman_hits {
     
     public $wpdb;
     private $table_name;
+    public $metakey = 'wpbannerman_hits';
 
     function __construct() {
         global $wpdb;
@@ -73,6 +74,39 @@ class Wpbannerman_hits {
         return false;
 
         $this->wpdb->delete( $this->table_name, array( 'banner_id' => $post_id ) );
+
+    }
+
+    public function addbyPostID($post_id){
+        
+        if(empty($post_id)){
+            return false;
+        }
+
+        if ( current_user_can('administrator') ) {
+            return false;
+        }
+
+        //update post meta
+        $count_key = $this->metakey;
+        $count = (int) get_post_meta( $post_id, $count_key, true );
+        $count++;
+        update_post_meta( $post_id, $count_key, $count );
+
+        //database update
+        global $wp;
+        $url    = '/'.$wp->request;
+        $this->add($post_id,$url);
+
+    }
+    
+    public function view($post_id){
+        
+        if(empty($post_id))
+        return false;
+
+        $count = get_post_meta( $post_id, $this->metakey, true );
+        return $count?$count:'0';
 
     }
 

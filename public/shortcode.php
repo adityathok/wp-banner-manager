@@ -76,7 +76,8 @@ if ( ! function_exists( 'wp_banner_manager_wpbannerman_shortcode' ) ) {
         <?php
 
         //counter view
-        count_wpbannerman_views($id);
+        $hits = New Wpbannerman_hits;
+        $hits->addbyPostID($id);
 
         return ob_get_clean();
 	}
