@@ -77,7 +77,7 @@ class Wpbannerman_hits {
 
     }
 
-    public function addbyPostID($post_id){
+    public function addHits($post_id,$url=null){
         
         if(empty($post_id)){
             return false;
@@ -94,8 +94,7 @@ class Wpbannerman_hits {
         update_post_meta( $post_id, $count_key, $count );
 
         //database update
-        global $wp;
-        $url    = '/'.$wp->request;
+        $url = $url?$url:'/';
         $this->add($post_id,$url);
 
     }

@@ -22,6 +22,8 @@ if ( ! function_exists( 'wp_banner_manager_wpbannerman_shortcode' ) ) {
 		$att        = shortcode_atts( array(
             'id'    => '',
         ), $atts );
+        global $wp;
+        $url            = '/'.$wp->request;
         $id             = $att['id'];
         $nodeid         = 'wpbannerman'.uniqid();
         $datameta       = get_post_meta( $id, 'wpbannerman', true );
@@ -37,7 +39,7 @@ if ( ! function_exists( 'wp_banner_manager_wpbannerman_shortcode' ) ) {
         $infobanner     = isset($datameta['info'])?$datameta['info']:'';
         $closebutton    = isset($datameta['closebutton'])?$datameta['closebutton']:'';
         ?>
-        <div class="wpbannerman-object <?php echo $nodeid;?>" data-node="<?php echo $nodeid;?>" data-id="<?php echo $id;?>">
+        <div class="wpbannerman-object wpbannerman-unready <?php echo $nodeid;?>" data-node="<?php echo $nodeid;?>" data-url="<?php echo $url;?>" data-id="<?php echo $id;?>">
             <?php if($mediaurl): ?>                
                 <div class="wpbannerman-image">
 
@@ -74,10 +76,6 @@ if ( ! function_exists( 'wp_banner_manager_wpbannerman_shortcode' ) ) {
             <?php endif; ?>
         </div>
         <?php
-
-        //counter view
-        $hits = New Wpbannerman_hits;
-        $hits->addbyPostID($id);
 
         return ob_get_clean();
 	}
