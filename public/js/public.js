@@ -18,4 +18,15 @@ jQuery(document).ready(function($) {
             $('.'+node).removeClass('wpbannerman-unready');
         });
     });
+    $('.wpbannerman-object').click(function(){
+        let idpost  = $(this).data('id');
+        let url     = $(this).data('url');
+        $.ajax({
+            method: "POST",
+            url: wpbannermanager_ajax.ajaxurl,
+            data: { action: "wpbannermanclick", idpost: idpost, url: url  }
+        }).done(function( data ) {
+            console.log(data);
+        });
+    });
 });  

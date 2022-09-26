@@ -19,6 +19,7 @@ class Wpbannerman_Activator {
 	 */
 	public static function activate() {
         Wpbannerman_hits::create_db();
+        Wpbannerman_click::create_db();
 	}
 
 }

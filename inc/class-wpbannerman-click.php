@@ -1,30 +1,30 @@
 <?php
 /**
- * Wpbannerman_hits
+ * Wpbannerman_click
  */
-class Wpbannerman_hits {
+class Wpbannerman_click {
     
     public $wpdb;
     private $table_name;
-    public $metakey = 'wpbannerman_hits';
+    public $metakey = 'wpbannerman_click';
 
     function __construct() {
         global $wpdb;
         $this->wpdb         = $wpdb;
-        $this->table_name   = $this->wpdb->prefix . 'wpbannerman_hits';
+        $this->table_name   = $this->wpdb->prefix . 'wpbannerman_click';
     }
 
     public static function create_db() {
         
         global $wpdb;
         $charset_collate    = $wpdb->get_charset_collate();
-        $table_hits         = $wpdb->prefix . 'wpbannerman_hits';
-        $sql                = "CREATE TABLE $table_hits (
+        $table_name         = $wpdb->prefix . 'wpbannerman_click';
+        $sql                = "CREATE TABLE $table_name (
             id INT UNSIGNED NOT NULL AUTO_INCREMENT,
             banner_id bigint(20) NOT NULL,
             uri varchar(255) NOT NULL,
             date date NOT NULL,
-            hit bigint(20) NOT NULL,
+            count bigint(20) NOT NULL,
             PRIMARY KEY  (id)
         ) $charset_collate;";
 
@@ -32,8 +32,8 @@ class Wpbannerman_hits {
         dbDelta( $sql );
 
     }
-
-    /// add data hits
+    
+    /// add data
     public function add($bannerid=null,$uri=null){
         if( $bannerid ) {
             $date = date( 'Y-m-d', current_time( 'timestamp', 0 ) );
@@ -44,11 +44,11 @@ class Wpbannerman_hits {
                     'banner_id'     => $bannerid,
                     'uri'           => $uri,
                     'date'          => $date,
-                    'hit'           => 1,
+                    'count'         => 1,
                 ) );
             } else {
                 $this->wpdb->update($this->table_name, array(
-                    'hit'           => $getdata[0]->hit + 1,
+                    'count'         => $getdata[0]->count + 1,
                 ), array(
                     'banner_id'     => $bannerid,
                     'uri'           => $uri,
@@ -57,7 +57,6 @@ class Wpbannerman_hits {
         }
     }
 
-    
     public function get($query=null){
         
         $query = $query?' WHERE '.$query:'';
@@ -74,8 +73,8 @@ class Wpbannerman_hits {
         $this->wpdb->delete( $this->table_name, array( 'banner_id' => $post_id ) );
 
     }
-
-    public function addHits($post_id,$url=null){
+    
+    public function addClick($post_id,$url=null){
         
         if(empty($post_id)){
             return false;
@@ -96,7 +95,7 @@ class Wpbannerman_hits {
         $this->add($post_id,$url);
 
     }
-    
+
     public function view($post_id){
         
         if(empty($post_id))
@@ -106,5 +105,4 @@ class Wpbannerman_hits {
         return $count?$count:'0';
 
     }
-
 }

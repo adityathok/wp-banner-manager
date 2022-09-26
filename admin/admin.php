@@ -69,7 +69,9 @@ function wpbannerman_delete_banner_post( $postid ) {
     }
  
     // Delete data hits
-    $hits = New Wpbannerman_hits;
+    $hits   = New Wpbannerman_hits;
     $hits->deleteDataByPostId($postid);
+    $click  = New Wpbannerman_click;
+    $click->deleteDataByPostId($postid);
 
 }
