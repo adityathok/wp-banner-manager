@@ -24,26 +24,34 @@ function wpbannerman_display_statistic() {
         new DateInterval('P1D'),
         new DateTime($datenow)
     );
-    $datearray = [];
-    $datalabel = [];
+    $hitsarray  = [];
+    $clickarray = [];
+    $datalabel  = [];
     foreach ($period as $key => $value) {
-        $datearray[$value->format('Y-m-d')] = 0;
+        $hitsarray[$value->format('Y-m-d')] = 0;
+        $clickarray[$value->format('Y-m-d')] = 0;
         $datalabel[] = $value->format('Y-m-d');       
     }
-    $datearray[$datenow ] = 0;
-    $datalabel[] = $datenow;
+    $hitsarray[$datenow ]   = 0;
+    $clickarray[$datenow ]  = 0;
+    $datalabel[]            = $datenow;
 
     //get data from table database    
     $hits       = new Wpbannerman_hits;
-    $datatable  = $hits->get("(date BETWEEN '".$datalabel[0]."' AND '".$datenow."') AND (banner_id = ".$getId.")");
+    $datahits   = $hits->get("(date BETWEEN '".$datalabel[0]."' AND '".$datenow."') AND (banner_id = ".$getId.")");
+    $click      = new Wpbannerman_click;
+    $dataclick  = $click->get("(date BETWEEN '".$datalabel[0]."' AND '".$datenow."') AND (banner_id = ".$getId.")");
     
-    if(empty($datatable)){
+    if(empty($datahits) && empty($dataclick)){
         echo 'No data to display';
         return false;
     }
 
-    foreach ($datatable as $key => $value) {
-        $datearray[$value['date']] = $datearray[$value['date']]+$value['hit'];      
+    foreach ($datahits as $key => $value) {
+        $hitsarray[$value['date']] = $hitsarray[$value['date']]+$value['hit'];      
+    }
+    foreach ($dataclick as $key => $value) {
+        $clickarray[$value['date']] = $clickarray[$value['date']]+$value['count'];      
     }
     
     ?>
@@ -55,12 +63,20 @@ function wpbannerman_display_statistic() {
 
         const data = {
             labels: labels,
-            datasets: [{
-            label: 'Hits',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [<?php echo implode(',',$datearray); ?>],
-            }]
+            datasets: [
+                {
+                    label: 'Hits',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [<?php echo implode(',',$hitsarray); ?>],
+                },
+                {
+                    label: 'Clicks',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    data: [<?php echo implode(',',$clickarray); ?>],
+                },
+            ]
         };
 
         const config = {
