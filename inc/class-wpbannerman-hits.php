@@ -67,14 +67,12 @@ class Wpbannerman_hits {
         return $getdata;
     }
 
-    public function deleteDataById($post_id){
+    public function deleteDataByPostId($post_id){
         
-        $query = $wpdb->prepare( 'SELECT banner_id FROM %s WHERE banner_id = %d', $this->table_name, $post_id );
-        $var = $wpdb->get_var( $query );
-        if ( $var ) {
-            $query2 = $wpdb->prepare( 'DELETE FROM %s WHERE banner_id = %d', $this->table_name, $post_id );
-            $wpdb->query( $query2 );
-        }
+        if(empty($post_id))
+        return false;
+
+        $this->wpdb->delete( $this->table_name, array( 'banner_id' => $post_id ) );
 
     }
 
