@@ -10,11 +10,12 @@
  */
 
  function wpbannerman_display_sideback( $post ) {
-    $getId  = isset($_GET['post'])?$_GET['post']:'';
+    $getId      = isset($_GET['post'])?$_GET['post']:'';
+    $shortcode  = $getId?'[wpbannerman id="'.$getId.'"]':'';
     ?>
     <div class="atbanner-meta-side">
         <p>Copy and paste this shortcode to display the banner.</p>
-        <input type="text" value='[wpbannerman id="<?php echo $getId; ?>"]' readonly="readonly" class="widefat" onfocus="this.select();" />
+        <input type="text" value='<?php echo $shortcode; ?>' readonly="readonly" class="widefat" onfocus="this.select();" />
     </div>
     <?php
  }
