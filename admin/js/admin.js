@@ -65,5 +65,22 @@
 
 		}
 		//end frame
+		
+		// Remove
+		jQuery(document).on('click', '.wpbannerman-reset-statistic', function() {
+			if (confirm("Reset all data in database ?") == true) {
+				jQuery('.wpbannerman-reset-statistic').html('Wait..');
+				let idpost  = jQuery(this).data('id');
+				$.ajax({
+					method: "POST",
+					url: wpbannermanager_ajax.ajaxurl,
+					data: { action: "wpbannermanreset", idpost: idpost }
+				}).done(function( data ) {
+					jQuery('.wpbannerman-reset-statistic').html('Reset');
+					jQuery('#myBannerChart').hide(500);
+				});
+			}
+		});
+
 	});
 })( jQuery );

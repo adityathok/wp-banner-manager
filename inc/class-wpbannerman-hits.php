@@ -72,6 +72,7 @@ class Wpbannerman_hits {
         return false;
 
         $this->wpdb->delete( $this->table_name, array( 'banner_id' => $post_id ) );
+        delete_post_meta($post_id, $this->metakey);
 
     }
 

@@ -56,7 +56,11 @@ function wpbannerman_display_statistic() {
     
     ?>
     <div>
-        <canvas id="myChart"></canvas>
+        <canvas id="myBannerChart"></canvas>
+        <hr>
+        <div class="btn-right">
+            <span class="button button-primary button-large wpbannerman-reset-statistic" data-id="<?php echo $getId; ?>">Reset</span>
+        </div>
     </div>
     <script>
         const labels = [<?php echo "'".implode("','", $datalabel)."'"; ?>];
@@ -86,8 +90,8 @@ function wpbannerman_display_statistic() {
             options: {}
         };
 
-        const myChart = new Chart(
-            document.getElementById('myChart'),
+        const myBannerChart = new Chart(
+            document.getElementById('myBannerChart'),
             config
         );
 

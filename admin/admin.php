@@ -48,6 +48,12 @@ if ( ! function_exists( 'wp_banner_manager_admin_enqueue' ) ) {
         wp_enqueue_script('thickbox');
         wp_enqueue_style('thickbox');
 
+        wp_localize_script( 'wp-banner-manager-admin-script', 'wpbannermanager_ajax',
+            array( 
+                'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            )
+        );
+
         if(isset($post->ID)) {
             wp_enqueue_media(array(
                 'post' => $post->ID,

@@ -30,3 +30,21 @@ function ajax_wpbannermanclick_handler() {
     // Stop execution afterward.
     wp_die();
 }
+
+add_action( 'wp_ajax_wpbannermanreset', 'ajax_wpbannermanreset_handler' );
+function ajax_wpbannermanreset_handler() {    
+    
+    $idpost = isset($_POST['idpost'])?$_POST['idpost']:'';
+
+    if(empty($idpost))
+    return false;
+
+    //delete
+    $hits = New Wpbannerman_hits;
+    $hits->deleteDataByPostId($idpost);
+    $click = New Wpbannerman_click;
+    $click->deleteDataByPostId($idpost);
+
+    // Stop execution afterward.
+    wp_die();
+}
