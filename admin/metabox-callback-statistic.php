@@ -74,6 +74,7 @@ function wpbannerman_display_statistic() {
                     borderColor: 'rgb(255, 99, 132)',
                     data: [<?php echo implode(',',$hitsarray); ?>],
                     fill: true,
+                    borderWidth: 1,
                 },
                 {
                     label: 'Clicks',
@@ -81,6 +82,7 @@ function wpbannerman_display_statistic() {
                     borderColor: 'rgba(54, 162, 235, 1)',
                     data: [<?php echo implode(',',$clickarray); ?>],
                     fill: true,
+                    borderWidth: 1,
                 },
             ]
         };
