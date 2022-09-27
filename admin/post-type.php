@@ -88,6 +88,7 @@ add_filter( 'manage_wpbannerman_posts_columns', 'set_custom_edit_wpbannerman_col
 function set_custom_edit_wpbannerman_columns($columns) {
     $columns['shortcode']   = __( 'Shortcode', 'wpbannerman' );
     $columns['hit']         = __( 'Hit', 'wpbannerman' );
+    $columns['click']         = __( 'Click', 'wpbannerman' );
     return $columns;
 }
 add_action( 'manage_wpbannerman_posts_custom_column' , 'custom_wpbannerman_column', 25, 2 );
@@ -99,6 +100,10 @@ function custom_wpbannerman_column( $column, $post_id ) {
         case 'hit' :
             $hits = New Wpbannerman_hits;
             echo $hits->view($post_id);
+            break;
+        case 'click' :
+            $click = New Wpbannerman_click;
+            echo $click->view($post_id);
             break;
     }
 }
