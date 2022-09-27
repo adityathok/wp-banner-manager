@@ -70,15 +70,17 @@ function wpbannerman_display_statistic() {
             datasets: [
                 {
                     label: 'Hits',
-                    backgroundColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgb(255, 99, 132, 0.2)',
                     borderColor: 'rgb(255, 99, 132)',
                     data: [<?php echo implode(',',$hitsarray); ?>],
+                    fill: true,
                 },
                 {
                     label: 'Clicks',
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     data: [<?php echo implode(',',$clickarray); ?>],
+                    fill: true,
                 },
             ]
         };
