@@ -107,3 +107,10 @@ function custom_wpbannerman_column( $column, $post_id ) {
             break;
     }
 }
+//sortable column
+add_filter( 'manage_edit-wpbannerman_sortable_columns', 'my_wpbannerman_sortable_columns' );
+function my_wpbannerman_sortable_columns( $columns ) {
+    $columns['hit'] = 'wpbannerman_hits';
+    $columns['click'] = 'wpbannerman_click';
+    return $columns;
+}
