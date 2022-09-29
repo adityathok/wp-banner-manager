@@ -37,3 +37,16 @@
     font-size: 1.5rem;
     cursor: pointer;
 }
+.wpbannerman-admin .text-right {
+    text-align: right;
+}
+.wpbannerman-admin .text-center {
+    text-align: center;
+}
+.wpbannerman-admin .wpbannerman-filter {
+    margin: 2rem 1rem;
+}
+.wpbannerman-admin .wpbannerman-filter .custom-datepicker {
+    margin-top: 1rem;
+    display: none;
+}

@@ -55,14 +55,46 @@ function wpbannerman_display_statistic() {
     }
     
     ?>
-    <div>
-        <canvas id="myBannerChart"></canvas>
-        <hr>
-        <div class="btn-right">
-            <span class="button button-primary button-large wpbannerman-reset-statistic" data-id="<?php echo $getId; ?>">Reset</span>
+    <div class="wpbannerman-admin">
+        <div class="wpbannerman-filter text-center" data-id="<?php echo $getId; ?>">
+            <div class="button-group">
+                <button type="button" class="button" data-time="7">Week</button>
+                <button type="button" class="button button-primary" data-time="30">Month</button>
+                <button type="button" class="button" data-time="365">Year</button>
+                <button type="button" class="button" data-time="toggle-custom-datepicker">Custom</button>
+            </div>
+            <div class="custom-datepicker">
+                <input type="date" name="date-from" value="" class="regular-text">
+                <span>to</span>
+                <input type="date" name="date-to" value="" class="regular-text">
+                <button type="button" class="button" data-time="0">Load data</button>
+            </div>
         </div>
+        <div class="wpbannermanchart">
+            <canvas id="myBannerChart"></canvas>
+        </div>
+        <hr>
+        <div class="text-right">
+            <span class="button button-large wpbannerman-reset-statistic" data-id="<?php echo $getId; ?>">
+                Reset All Data
+            </span>
+        </div>
+
     </div>
+
     <script>
+        jQuery(function($){
+            $('.wpbannerman-filter .button').click(function(){
+                $('.wpbannerman-filter .button').removeClass('button-primary');
+                $(this).addClass('button-primary');
+                let datatime = $(this).data('time');
+                if(datatime === 'toggle-custom-datepicker'){
+                    $('.wpbannerman-filter .custom-datepicker').toggle(500);
+                } else {
+                    $('.wpbannerman-filter .custom-datepicker').hide(500);
+                }
+            });
+        });
         const labels = [<?php echo "'".implode("','", $datalabel)."'"; ?>];
 
         const data = {
