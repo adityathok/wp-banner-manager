@@ -15,44 +15,6 @@ function wpbannerman_display_statistic() {
         echo 'Nothing to show';
         return false;
     }
-
-    //create array date
-    $datenow    = date( 'Y-m-d', current_time( 'timestamp', 0 ) );
-    $startdate  = date("Y-m-d", strtotime("-1 month", strtotime($datenow)));
-    $period     = new DatePeriod(
-        new DateTime($startdate),
-        new DateInterval('P1D'),
-        new DateTime($datenow)
-    );
-    $hitsarray  = [];
-    $clickarray = [];
-    $datalabel  = [];
-    foreach ($period as $key => $value) {
-        $hitsarray[$value->format('Y-m-d')] = 0;
-        $clickarray[$value->format('Y-m-d')] = 0;
-        $datalabel[] = $value->format('Y-m-d');       
-    }
-    $hitsarray[$datenow ]   = 0;
-    $clickarray[$datenow ]  = 0;
-    $datalabel[]            = $datenow;
-
-    //get data from table database    
-    $hits       = new Wpbannerman_hits;
-    $datahits   = $hits->get("(date BETWEEN '".$datalabel[0]."' AND '".$datenow."') AND (banner_id = ".$getId.")");
-    $click      = new Wpbannerman_click;
-    $dataclick  = $click->get("(date BETWEEN '".$datalabel[0]."' AND '".$datenow."') AND (banner_id = ".$getId.")");
-    
-    if(empty($datahits) && empty($dataclick)){
-        echo 'No data to display';
-        return false;
-    }
-
-    foreach ($datahits as $key => $value) {
-        $hitsarray[$value['date']] = $hitsarray[$value['date']]+$value['hit'];      
-    }
-    foreach ($dataclick as $key => $value) {
-        $clickarray[$value['date']] = $clickarray[$value['date']]+$value['count'];      
-    }
     
     ?>
     <div class="wpbannerman-admin">
@@ -64,15 +26,13 @@ function wpbannerman_display_statistic() {
                 <button type="button" class="button" data-time="toggle-custom-datepicker">Custom</button>
             </div>
             <div class="custom-datepicker">
-                <input type="date" name="date-from" value="" class="regular-text">
+                <input type="date" name="date-from" value="" class="date-from regular-text">
                 <span>to</span>
-                <input type="date" name="date-to" value="" class="regular-text">
-                <button type="button" class="button" data-time="0">Load data</button>
+                <input type="date" name="date-to" value="" class="date-to regular-text">
+                <button type="button" class="button" data-time="custom-date">Load data</button>
             </div>
         </div>
-        <div class="wpbannermanchart">
-            <canvas id="myBannerChart"></canvas>
-        </div>
+        <div class="wpbannermanchart"></div>
         <hr>
         <div class="text-right">
             <span class="button button-large wpbannerman-reset-statistic" data-id="<?php echo $getId; ?>">
@@ -84,6 +44,61 @@ function wpbannerman_display_statistic() {
 
     <script>
         jQuery(function($){
+
+            function loadChartWPBannerman(time){
+                let idpost  = $('.wpbannerman-filter').data('id');
+                let from    = $('.wpbannerman-filter .date-from').val();
+                let to      = $('.wpbannerman-filter .date-to').val();
+
+                $.ajax({
+                    method: "POST",
+                    url: wpbannermanager_ajax.ajaxurl,
+                    data: { action: "wpbannermanchart", idpost: idpost, time: time, datefrom:from, dateto:to  }
+                }).done(function( respons ) {
+                    console.log(respons);
+
+                    $('.wpbannermanchart').html('<canvas id="myBannerChart"></canvas>');
+
+                    const labels    = respons.respon.label.split(',');
+                    const datahits  = respons.respon.hits.split(',');
+                    const dataclick = respons.respon.click.split(',');
+                    const datachart = {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Hits',
+                                backgroundColor: 'rgb(255, 99, 132, 0.2)',
+                                borderColor: 'rgb(255, 99, 132)',
+                                data: datahits,
+                                fill: true,
+                                borderWidth: 1,
+                            },
+                            {
+                                label: 'Clicks',
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                data: dataclick,
+                                fill: true,
+                                borderWidth: 1,
+                            },
+                        ]
+                    };
+
+                    const config = {
+                        type: 'line',
+                        fill: true,
+                        data: datachart,
+                        options: {}
+                    };
+
+                    const myBannerChart = new Chart(
+                        document.getElementById('myBannerChart'),
+                        config
+                    );
+
+                });
+            }
+
             $('.wpbannerman-filter .button').click(function(){
                 $('.wpbannerman-filter .button').removeClass('button-primary');
                 $(this).addClass('button-primary');
@@ -91,45 +106,10 @@ function wpbannerman_display_statistic() {
                 if(datatime === 'toggle-custom-datepicker'){
                     $('.wpbannerman-filter .custom-datepicker').toggle(500);
                 } else {
-                    $('.wpbannerman-filter .custom-datepicker').hide(500);
+                    loadChartWPBannerman(datatime);
                 }
             });
         });
-        const labels = [<?php echo "'".implode("','", $datalabel)."'"; ?>];
-
-        const data = {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Hits',
-                    backgroundColor: 'rgb(255, 99, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [<?php echo implode(',',$hitsarray); ?>],
-                    fill: true,
-                    borderWidth: 1,
-                },
-                {
-                    label: 'Clicks',
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    data: [<?php echo implode(',',$clickarray); ?>],
-                    fill: true,
-                    borderWidth: 1,
-                },
-            ]
-        };
-
-        const config = {
-            type: 'line',
-            fill: true,
-            data: data,
-            options: {}
-        };
-
-        const myBannerChart = new Chart(
-            document.getElementById('myBannerChart'),
-            config
-        );
 
     </script>
     <?php
