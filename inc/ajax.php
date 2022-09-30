@@ -60,13 +60,17 @@ function ajax_wpbannermanchart_handler() {
 
     $result['request']   = $_POST;     
     
-    //create array date
-    $datenow    = date( 'Y-m-d', current_time( 'timestamp', 0 ) );
-    $startdate  = date("Y-m-d", strtotime("-1 month", strtotime($datenow)));
-    $period     = new DatePeriod(
-        new DateTime($startdate),
+    //if custom date
+    if($time!='custom-date'){
+        $dateto     = date( 'Y-m-d', current_time( 'timestamp', 0 ) );
+        $datefrom   = date("Y-m-d", strtotime("-".$time." day", strtotime($dateto)));
+    }
+
+    //create arrar date
+    $period = new DatePeriod(
+        new DateTime($datefrom),
         new DateInterval('P1D'),
-        new DateTime($datenow)
+        new DateTime($dateto)
     );
     $hitsarray  = [];
     $clickarray = [];
@@ -76,26 +80,26 @@ function ajax_wpbannermanchart_handler() {
         $clickarray[$value->format('Y-m-d')] = 0;
         $datalabel[] = $value->format('Y-m-d');       
     }
-    $hitsarray[$datenow ]   = 0;
-    $clickarray[$datenow ]  = 0;
-    $datalabel[]            = $datenow;
+    $hitsarray[$dateto]   = 0;
+    $clickarray[$dateto]  = 0;
+    $datalabel[]          = $dateto;
 
-    //get data from table database    
+    //get data from table database
     $hits       = new Wpbannerman_hits;
-    $datahits   = $hits->get("(date BETWEEN '".$datalabel[0]."' AND '".$datenow."') AND (banner_id = ".$idpost.")");
+    $datahits   = $hits->get("(date BETWEEN '".$datefrom."' AND '".$dateto."') AND (banner_id = ".$idpost.")");
     $click      = new Wpbannerman_click;
-    $dataclick  = $click->get("(date BETWEEN '".$datalabel[0]."' AND '".$datenow."') AND (banner_id = ".$idpost.")");
+    $dataclick  = $click->get("(date BETWEEN '".$datefrom."' AND '".$dateto."') AND (banner_id = ".$idpost.")");
     
-    if(empty($datahits) && empty($dataclick)){
-        echo 'No data to display';
-        return false;
+    if($datahits){
+        foreach ($datahits as $key => $value) {
+            $hitsarray[$value['date']] = $hitsarray[$value['date']]+$value['hit'];      
+        }
     }
 
-    foreach ($datahits as $key => $value) {
-        $hitsarray[$value['date']] = $hitsarray[$value['date']]+$value['hit'];      
-    }
-    foreach ($dataclick as $key => $value) {
-        $clickarray[$value['date']] = $clickarray[$value['date']]+$value['count'];      
+    if($dataclick){
+        foreach ($dataclick as $key => $value) {
+            $clickarray[$value['date']] = $clickarray[$value['date']]+$value['count'];      
+        }
     }
     
     $result['respon'] = [
