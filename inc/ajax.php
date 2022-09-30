@@ -58,7 +58,7 @@ function ajax_wpbannermanchart_handler() {
     $dateto     = isset($_POST['dateto'])?$_POST['dateto']:'';
     $result     = [];
 
-    $result['request']   = $_POST;     
+    // $result['request']   = $_POST;     
     
     //if custom date
     if($time!='custom-date'){
@@ -100,6 +100,13 @@ function ajax_wpbannermanchart_handler() {
         foreach ($dataclick as $key => $value) {
             $clickarray[$value['date']] = $clickarray[$value['date']]+$value['count'];      
         }
+    }
+
+    if($datahits || $dataclick){
+        $result['status'] = 200;
+    } else {
+        $result['status'] = 204;
+        $result['message'] = 'No data to display';
     }
     
     $result['respon'] = [

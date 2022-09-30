@@ -55,58 +55,67 @@ function wpbannerman_display_statistic() {
                     url: wpbannermanager_ajax.ajaxurl,
                     data: { action: "wpbannermanchart", idpost: idpost, time: time, datefrom:from, dateto:to  }
                 }).done(function( respons ) {
-                    console.log(respons);
 
-                    $('.wpbannermanchart').html('<canvas id="myBannerChart"></canvas>');
+                    if(respons.status==200) {
 
-                    const labels    = respons.respon.label.split(',');
-                    const datahits  = respons.respon.hits.split(',');
-                    const dataclick = respons.respon.click.split(',');
-                    const datachart = {
-                        labels: labels,
-                        datasets: [
-                            {
-                                label: 'Hits',
-                                backgroundColor: 'rgb(255, 99, 132, 0.2)',
-                                borderColor: 'rgb(255, 99, 132)',
-                                data: datahits,
-                                fill: true,
-                                borderWidth: 1,
-                            },
-                            {
-                                label: 'Clicks',
-                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                data: dataclick,
-                                fill: true,
-                                borderWidth: 1,
-                            },
-                        ]
-                    };
+                        $('.wpbannermanchart').html('<canvas id="myBannerChart"></canvas>');
 
-                    const config = {
-                        type: 'line',
-                        fill: true,
-                        data: datachart,
-                        options: {}
-                    };
+                        const labels    = respons.respon.label.split(',');
+                        const datahits  = respons.respon.hits.split(',');
+                        const dataclick = respons.respon.click.split(',');
+                        const datachart = {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: 'Hits',
+                                    backgroundColor: 'rgb(255, 99, 132, 0.2)',
+                                    borderColor: 'rgb(255, 99, 132)',
+                                    data: datahits,
+                                    fill: true,
+                                    borderWidth: 1,
+                                },
+                                {
+                                    label: 'Clicks',
+                                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    data: dataclick,
+                                    fill: true,
+                                    borderWidth: 1,
+                                },
+                            ]
+                        };
 
-                    const myBannerChart = new Chart(
-                        document.getElementById('myBannerChart'),
-                        config
-                    );
+                        const config = {
+                            type: 'line',
+                            fill: true,
+                            data: datachart,
+                            options: {}
+                        };
+
+                        const myBannerChart = new Chart(
+                            document.getElementById('myBannerChart'),
+                            config
+                        );
+
+                    } else {
+                        $('.wpbannermanchart').html(respons.message);
+                    }
 
                 });
             }
 
+            loadChartWPBannerman(30);
             $('.wpbannerman-filter .button').click(function(){
                 $('.wpbannerman-filter .button').removeClass('button-primary');
                 $(this).addClass('button-primary');
                 let datatime = $(this).data('time');
                 if(datatime === 'toggle-custom-datepicker'){
                     $('.wpbannerman-filter .custom-datepicker').toggle(500);
+                } else if(datatime === 'custom-date') {
+                    loadChartWPBannerman(datatime);
                 } else {
                     loadChartWPBannerman(datatime);
+                    $('.wpbannerman-filter .custom-datepicker').hide(500);
                 }
             });
         });
