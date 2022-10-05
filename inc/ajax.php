@@ -5,13 +5,17 @@ function ajax_wpbannermanhits_handler() {
     
     $idpost = isset($_POST['idpost'])?$_POST['idpost']:'';
     $url    = isset($_POST['url'])?$_POST['url']:'';
+    $result = [];
 
     //counter view
     $hits = New Wpbannerman_hits;
     $hits->addHits($idpost,$url);
 
-    // Stop execution afterward.
-    wp_die();
+    $result['status'] = 200;
+    $result['idbanner'] = $idpost;
+
+    // send result.
+    wp_send_json($result);
 }
 
 add_action('wp_ajax_nopriv_wpbannermanclick', 'ajax_wpbannermanclick_handler');
