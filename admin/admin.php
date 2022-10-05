@@ -25,6 +25,9 @@ require plugin_dir_path( __FILE__ ) . 'metabox-callback-statistic.php';
 // register save custom metabox
 require plugin_dir_path( __FILE__ ) . 'save-post.php';
 
+// register overview page
+require plugin_dir_path( __FILE__ ) . 'admin-page.php';
+
 
 if ( ! function_exists( 'wp_banner_manager_admin_enqueue' ) ) {
     /**
